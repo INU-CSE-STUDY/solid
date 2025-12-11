@@ -13,7 +13,7 @@ public class KJ_Sub implements KJ_CalculateStrategy {
     }
 
     @Override
-    public CalculateOperation getOperator() {
-        return CalculateOperation.SUB;
+    public boolean support(CalculateOperation operation) {
+        return CalculateOperation.SUB.equals(operation);
     }
 }

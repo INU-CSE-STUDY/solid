@@ -13,7 +13,7 @@ public class KJ_Mul implements KJ_CalculateStrategy {
     }
 
     @Override
-    public CalculateOperation getOperator() {
-        return CalculateOperation.MUL;
+    public boolean support(CalculateOperation operation) {
+        return CalculateOperation.MUL.equals(operation);
     }
 }

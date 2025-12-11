@@ -5,5 +5,5 @@ import study.spring.solid.part1.doamin.CalculateOperation;
 public interface KJ_CalculateStrategy {
 
     long calculate(long op1, long op2);
-    CalculateOperation getOperator();
+    boolean support(CalculateOperation operation);
 }

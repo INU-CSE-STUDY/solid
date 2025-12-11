@@ -13,7 +13,7 @@ public class KJ_Add implements KJ_CalculateStrategy {
     }
 
     @Override
-    public CalculateOperation getOperator() {
-        return CalculateOperation.ADD;
+    public boolean support(CalculateOperation operation) {
+        return CalculateOperation.ADD.equals(operation);
     }
 }

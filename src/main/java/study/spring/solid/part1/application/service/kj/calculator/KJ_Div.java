@@ -16,7 +16,7 @@ public class KJ_Div implements KJ_CalculateStrategy {
     }
 
     @Override
-    public CalculateOperation getOperator() {
-        return CalculateOperation.DIV;
+    public boolean support(CalculateOperation operation) {
+        return CalculateOperation.DIV.equals(operation);
     }
 }
