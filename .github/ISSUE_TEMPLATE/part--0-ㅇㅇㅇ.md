@@ -1,25 +1,16 @@
----
-name: Part. 0 ㅇㅇㅇ
-about: Implementing Object-Oriented Design in Spring Applications
-title: ''
-labels: ''
-assignees: ''
-
----
-
 ### 🗓️ 마감기한
 
 ~ 2026. 00. 00.
 
 ### 📨 API 주소
 
-```java
-**/api/v1/actions/...**
+```json
+/api/v1/actions/...
 ```
 
 ### 📤 요청
 
-```java
+```json
 {
     "operation": CalculateOperation,
     "operator1": number,
@@ -29,7 +20,7 @@ assignees: ''
 
 ### 📥 응답
 
-```java
+```json
 number
 ```
 
