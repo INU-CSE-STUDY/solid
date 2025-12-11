@@ -1,6 +1,5 @@
 package study.spring.solid.part1.application.service.kj.calculator;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import study.spring.solid.part1.application.prot.in.KJ_CalculateStrategy;
 import study.spring.solid.part1.doamin.CalculateOperation;
@@ -8,21 +7,25 @@ import study.spring.solid.part1.doamin.CalculateOperation;
 import java.util.*;
 
 @Component
-@RequiredArgsConstructor
 public class KJ_Calculator {
 
-    private final List<KJ_CalculateStrategy> operations;
+    private final Map<CalculateOperation, KJ_CalculateStrategy> strategyMap;
+
+    public KJ_Calculator(List<KJ_CalculateStrategy> strategies) {
+
+        this.strategyMap = new HashMap<>();
+
+        for (KJ_CalculateStrategy strategy : strategies) {
+            strategyMap.put(strategy.getOperator(), strategy);
+        }
+    }
 
     public long calculate(CalculateOperation operation, long op1, long op2) {
 
-        for (KJ_CalculateStrategy op : operations) {
+        KJ_CalculateStrategy strategy = strategyMap.get(operation);
+        if (strategy == null) throw new IllegalArgumentException("지원하지 않는 연산입니다.");
 
-            if (op.isSameOperator(operation)) {
-                return op.calculate(op1, op2);
-            }
-        }
-
-        throw new IllegalArgumentException("지원하지 않는 연산입니다.");
+        return strategy.calculate(op1, op2);
     }
 }
 
@@ -35,8 +38,8 @@ class KJ_Add implements KJ_CalculateStrategy {
     }
 
     @Override
-    public boolean isSameOperator(CalculateOperation operation) {
-        return CalculateOperation.ADD.equals(operation);
+    public CalculateOperation getOperator() {
+        return CalculateOperation.ADD;
     }
 }
 
@@ -49,8 +52,8 @@ class KJ_Sub implements KJ_CalculateStrategy {
     }
 
     @Override
-    public boolean isSameOperator(CalculateOperation operation) {
-        return CalculateOperation.SUB.equals(operation);
+    public CalculateOperation getOperator() {
+        return CalculateOperation.SUB;
     }
 }
 
@@ -63,8 +66,8 @@ class KJ_Mul implements KJ_CalculateStrategy {
     }
 
     @Override
-    public boolean isSameOperator(CalculateOperation operation) {
-        return CalculateOperation.MUL.equals(operation);
+    public CalculateOperation getOperator() {
+        return CalculateOperation.MUL;
     }
 }
 
@@ -80,7 +83,7 @@ class KJ_Div implements KJ_CalculateStrategy {
     }
 
     @Override
-    public boolean isSameOperator(CalculateOperation operation) {
-        return CalculateOperation.DIV.equals(operation);
+    public CalculateOperation getOperator() {
+        return CalculateOperation.DIV;
     }
 }
