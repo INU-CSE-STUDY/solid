@@ -1,3 +1,12 @@
+---
+name: Part. 0 ㅇㅇㅇ
+about: Implementing Object-Oriented Design in Spring Applications
+title: ''
+labels: ''
+assignees: ''
+
+---
+
 ### 🗓️ 마감기한
 
 ~ 2026. 00. 00.
