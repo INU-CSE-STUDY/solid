@@ -4,7 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
-import study.spring.solid.part2.application.prot.in.DataUseCase;
+import study.spring.solid.part2.application.prot.in.JHG_DataCommandUseCase;
+import study.spring.solid.part2.application.prot.in.JHG_DataExternalServerUseCase;
 import study.spring.solid.part2.application.prot.out.ExternalApiPort;
 import study.spring.solid.part2.application.prot.out.SavePort;
 import study.spring.solid.part2.domain.Data;
@@ -14,27 +15,23 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 @Slf4j
+@Profile("JHG")
 @Service
-@Profile("TEST")
 @RequiredArgsConstructor
-public class DataFacade implements DataUseCase {
+public class JHG_DataService implements JHG_DataCommandUseCase, JHG_DataExternalServerUseCase {
+
+    private final SavePort savePort;
+    private final ExternalApiPort externalPort;
 
     private static final long TRANSACTION_TIMEOUT_SECONDS = 3L;
 
-    private final ExternalApiPort externalApiPort;
-    private final SavePort savePort;
-
     @Override
-    public Data processData(String content) {
-        log.info("트랜잭션 시작 - 내용: {}", content);
-
+    public void save(Data data) {
         try {
-            return CompletableFuture
+            CompletableFuture
                     .supplyAsync(() -> {
-                        String id = externalApiPort.callExternalApi(content);
-                        Data result = new Data(id, content);
-                        savePort.save(result);
-                        return result;
+                        savePort.save(data);
+                        return data;
                     })
                     .orTimeout(TRANSACTION_TIMEOUT_SECONDS, TimeUnit.SECONDS)
                     .join();
@@ -45,5 +42,10 @@ public class DataFacade implements DataUseCase {
             }
             throw new RuntimeException("데이터 처리 실패", e);
         }
+    }
+
+    @Override
+    public String call(String content) {
+        return externalPort.callExternalApi(content);
     }
 }
