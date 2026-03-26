@@ -2,40 +2,33 @@ package study.spring.solid.part2.application.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import study.spring.solid.part2.application.prot.in.DataUseCase;
-import study.spring.solid.part2.application.prot.out.ExternalApiPort;
-import study.spring.solid.part2.application.prot.out.SavePort;
 import study.spring.solid.part2.domain.Data;
 
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 @Slf4j
 @Service
+@Profile("KJ")
 @RequiredArgsConstructor
-public class DataFacade implements DataUseCase {
+public class KJ_DataFacade implements DataUseCase {
 
     private static final long TRANSACTION_TIMEOUT_SECONDS = 3L;
 
-    private final ExternalApiPort externalApiPort;
-    private final SavePort savePort;
+    private final KJ_DataProcessService dataProcessService;
+    private final KJ_DataSaveService dataSaveService;
 
     @Override
     public Data processData(String content) {
         log.info("트랜잭션 시작 - 내용: {}", content);
 
         try {
-            return CompletableFuture
-                    .supplyAsync(() -> {
-                        String id = externalApiPort.callExternalApi(content);
-                        Data result = new Data(id, content);
-                        savePort.save(result);
-                        return result;
-                    })
-                    .orTimeout(TRANSACTION_TIMEOUT_SECONDS, TimeUnit.SECONDS)
-                    .join();
+            Data result = dataProcessService.processData(content);
+            dataSaveService.save(result);
+
+            return result;
         } catch (Exception e) {
             log.error("트랜잭션 롤백", e);
             if (e.getCause() instanceof TimeoutException) {
