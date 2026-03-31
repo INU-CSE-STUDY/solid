@@ -1,6 +1,7 @@
 package study.spring.solid.part3.sales.domain;
 
 import lombok.*;
+import study.spring.solid.part3.sap.SapDataProvider;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -9,7 +10,7 @@ import java.util.UUID;
 @Setter
 @Builder(toBuilder = true)
 @AllArgsConstructor
-public class Sales {
+public class Sales implements SapDataProvider {
 
     private final UUID id;
     private final BigDecimal price;
