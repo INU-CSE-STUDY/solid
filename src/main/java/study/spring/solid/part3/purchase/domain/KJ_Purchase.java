@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import study.spring.solid.part3.sap.SapDataProvider;
+import study.spring.solid.part3.sap.KJ_SapDataProvider;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -13,7 +13,7 @@ import java.util.UUID;
 @Setter
 @Builder(toBuilder = true)
 @AllArgsConstructor
-public class Purchase implements SapDataProvider {
+public class KJ_Purchase implements KJ_SapDataProvider {
 
     private final UUID id;
     private final BigDecimal price;
@@ -21,7 +21,7 @@ public class Purchase implements SapDataProvider {
     private final String vendorName;
     private final BigDecimal amount;
 
-    public Purchase processId(UUID id) {
+    public KJ_Purchase processId(UUID id) {
         return this.toBuilder()
                 .id(id)
                 .build();
