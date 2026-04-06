@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 
 @AllArgsConstructor
 public class SapSendDto {
+
     private BigDecimal amount;
     private BigDecimal price;
 }
