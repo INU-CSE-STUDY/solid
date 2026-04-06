@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import study.spring.solid.part3.sap.domain.JHGSapStatus;
+import study.spring.solid.part3.sap.domain.JHG_SapStatus;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -13,7 +13,7 @@ import java.util.UUID;
 @Setter
 @Builder(toBuilder = true)
 @AllArgsConstructor
-public class Purchase implements JHGSapStatus {
+public class Purchase implements JHG_SapStatus {
 
     private final UUID id;
     private final BigDecimal price;
