@@ -1,8 +1,8 @@
 package study.spring.solid.part3.purchase.application.port.in;
 
-import study.spring.solid.part3.purchase.domain.Purchase;
+import study.spring.solid.part3.purchase.domain.KJ_Purchase;
 
 public interface PurchaseUseCase {
 
-    Purchase processData(CreatePurchaseCommand command);
+    KJ_Purchase processData(CreatePurchaseCommand command);
 }
